@@ -14,7 +14,7 @@ const baseUrl = codespaceName
   : `http://localhost:${port}`
 
 app.use(express.json())
-//  api health check endpoint
+//  api health check endpoint - works
 app.get('/api/health', (_request, response) => {
   response.json({ status: 'ok' })
 })
