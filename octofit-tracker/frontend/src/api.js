@@ -9,8 +9,16 @@ export const apiBaseUrl = API_BASE_URL
 
 export const normalizeCollection = (payload) => {
   if (Array.isArray(payload)) return payload
-  if (Array.isArray(payload?.results)) return payload.results
-  if (Array.isArray(payload?.data)) return payload.data
+
+  for (const key of ['results', 'data', 'items', 'docs', 'records']) {
+    const value = payload?.[key]
+    if (Array.isArray(value)) return value
+    if (value && typeof value === 'object') {
+      const nestedCollection = normalizeCollection(value)
+      if (nestedCollection.length > 0) return nestedCollection
+    }
+  }
+
   return []
 }
 
